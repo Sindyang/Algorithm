@@ -1,2 +1,2 @@
 # Algorithm
-solved problems in OJs
+solved problems on OJs
