@@ -45,15 +45,15 @@ public:
 		int i;
 		int digit;
 		int sum = 0;
-		string str = int2str(num);
-		for (i = 0; i < (signed) str.length(); i++) {
-			digit = str[i] - '0';
-			sum += digit;
+		if (num / 10 != 0) {
+			string str = int2str(num);
+			for (i = 0; i < (signed) str.length(); i++) {
+				digit = str[i] - '0';
+				sum += digit;
+			}
+			num = addDigits(sum);
 		}
-		if (str.length() > 1) {
-			sum = addDigits(sum);
-		}
-		return sum;
+		return num;
 	}
 
 	string int2str(const int &int_temp) {
