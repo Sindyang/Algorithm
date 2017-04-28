@@ -1,3 +1,4 @@
+//Solution 1
 public void sortColors(int[] nums) {
 		int i;
 		int len_red = 0;
@@ -19,3 +20,29 @@ public void sortColors(int[] nums) {
 			}
 		}
 	}
+
+//Solution 2
+public class Solution {
+   public void sortColors(int[] nums) {
+		int left = 0;
+		int right = nums.length - 1;
+		int i = 0;
+		while (i <= right) {
+			int temp;
+			if (nums[i] == 0) {
+				temp = nums[left];
+				nums[left] = nums[i];
+				nums[i] = temp;
+				left++;
+				i++;
+			} else if (nums[i] == 1) {
+				i++;
+			} else {
+				temp = nums[right];
+				nums[right] = nums[i];
+				nums[i] = temp;
+				right--;
+			}
+		}
+	}
+}
