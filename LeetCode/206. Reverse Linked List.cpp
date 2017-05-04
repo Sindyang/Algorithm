@@ -12,3 +12,19 @@ public:
 		return newHead;
 	}
 };
+
+//solution 2
+class Solution {
+public:
+	ListNode* reverseList(ListNode *head) {
+		return reverseListIter(head, NULL);
+	}
+	ListNode *reverseListIter(ListNode *head, ListNode *newhead) {
+		if (head == NULL) {
+			return newhead;
+		}
+		ListNode *nextNode = head->next;
+		head->next = newhead;
+		return reverseListIter(nextNode, head);
+	}
+};
