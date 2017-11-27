@@ -15,31 +15,21 @@ public:
 
 		queue<TreeNode *> q;
 		q.push(root);
-		int res = root->val;
-		bool flag = true;
+		int res = 0;
 		while (!q.empty()) {
+			res = q.front()->val;
 			for (int i = 0, n = q.size(); i < n; i++) {
 				TreeNode *t = q.front();
 				q.pop();
 
 				if (t->left != NULL) {
 					q.push(t->left);
-					if (flag) {
-						res = t->left->val;
-						flag = false;
-					}
 				}
 
 				if (t->right != NULL) {
 					q.push(t->right);
-					if (flag) {
-						res = t->right->val;
-						flag = false;
-					}
 				}
-
 			}
-			flag = true;
 		}
 		return res;
 	}
