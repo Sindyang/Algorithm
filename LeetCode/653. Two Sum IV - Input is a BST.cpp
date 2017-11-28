@@ -1,3 +1,4 @@
+//solution 1
 class Solution {
 public:
 	bool findTarget(TreeNode* root, int k) {
@@ -37,5 +38,40 @@ public:
 				return true;
 		}
 		return result;
+	}
+};
+
+//solution 2
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+	bool findTarget(TreeNode *root, int k) {
+		vector<int> v;
+		getelement(root, v);
+		bool flag = false;
+		for (vector<int>::iterator it = v.begin(); it != v.end(); it++) {
+			vector<int>::iterator newit = find(it, v.end(), k - *it);
+			if (newit != it && newit != v.end()) {
+				flag = true;
+				break;
+			}
+		}
+		return flag;
+	}
+
+	void getelement(TreeNode *root, vector<int> &v) {
+		if (root->left != NULL)
+			getelement(root->left, v);
+		v.push_back(root->val);
+		if (root->right != NULL)
+			getelement(root->right, v);
 	}
 };
