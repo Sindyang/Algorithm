@@ -12,6 +12,7 @@ void Merge(int *arr, int low, int mid, int high);
 void QuickSort(int *arr, int len);
 void QSort(int *arr, int low, int high);
 int Partition(int *arr, int low, int high);
+int* CountingSort(int *arr, int max, int len);
 void swap(int *arr, int i, int j);
 void print(int *arr, int len);
 int main() {
@@ -49,6 +50,12 @@ int main() {
 	int arr7[10] = { 9, 1, 5, 8, 3, 7, 4, 6, 2 };
 	ShellSort(arr7, 10);
 	print(arr7, 10);
+
+	//计数排序
+	int arr8[10] = { 9, 1, 5, 8, 3, 7, 4, 6, 2 };
+	int *result = CountingSort(arr8, 9, 10);
+	print(result, 10);
+	delete[] result;
 	return 0;
 }
 
@@ -187,15 +194,15 @@ void MergeSort(int *arr, int len) {
 }
 
 /*在某趟归并中，设各子表的长度为gap，则归并前R[0,n-1]中共有n/gap个有序的子表：R[0…gap-1],R[gap…2*gap-1],……R[(n/gap)*gap…n-1]
- 若子表个数为奇数，则最后一个子表无须和其他子表归并（即本趟处理轮空）：若子表个数为偶数，则要注意到最后一对子表中后一个子表区间的上限为n-1
- */
+ *若子表个数为奇数，则最后一个子表无须和其他子表归并（即本趟处理轮空）：若子表个数为偶数，则要注意到最后一对子表中后一个子表区间的上限为n-1
+ **/
 void MergePass(int *arr, int gap, int len) {
 	for (int i = 0; i + 2 * gap - 1 < len; i += 2 * gap) {
 		Merge(arr, i, i + gap - 1, i + 2 * gap - 1);
 	}
 }
 
-//合并两个子表
+/*合并两个子表*/
 void Merge(int *arr, int low, int mid, int high) {
 	int arr2[high - low + 1];
 	int i = low;
@@ -219,7 +226,7 @@ void Merge(int *arr, int low, int mid, int high) {
 	}
 }
 
-//快速排序
+/*快速排序*/
 void QuickSort(int *arr, int len) {
 	QSort(arr, 0, len - 1);
 }
@@ -245,4 +252,27 @@ int Partition(int *arr, int low, int high) {
 	}
 	arr[low] = pivot;
 	return low;
+}
+
+/**
+ * 计数排序
+ * 时间复杂度：O(max+n)
+ * 当max = len时，时间复杂度为O(n)
+ */
+int* CountingSort(int *arr, int max, int len) {
+	int count[max + 1];
+	int *result = new int[len];
+	for (int i = 0; i <= max; i++)
+		count[i] = 0;
+	// 以下循环操作完成后，count的第i个位置保存着array中，值为i的元素的总个数
+	for (int i = 0; i < len; i++)
+		count[arr[i]]++;
+	// 以下循环操作完成后，count的第i个位置保存着array中，值小于或等于i的元素的总个数
+	for (int i = 1; i < len; i++)
+		count[i] += count[i - 1];
+	for (int i = len - 1; i >= 0; i--) {
+		result[count[arr[i]] - 1] = arr[i];
+		count[arr[i]] -= 1;
+	}
+	return result;
 }
