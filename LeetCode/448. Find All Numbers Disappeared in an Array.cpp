@@ -1,3 +1,4 @@
+// solution 1
 class Solution {
 public:
 	vector<int> findDisappearedNumbers(vector<int>& nums) {
@@ -17,5 +18,24 @@ public:
 			}
 		}
 		return result;
+	}
+};
+
+// solution 2
+class Solution {
+public:
+	vector<int> findDisappearedNumbers(vector<int>& nums) {
+		vector<int> ans;
+		for (int i = 0; i < (signed) nums.size(); i++) {
+			int index = abs(nums[i]) - 1;
+			if (nums[index] > 0)
+				nums[index] *= -1;
+			else
+				continue;
+		}
+		for (int i = 0; i < (signed) nums.size(); i++)
+			if (nums[i] > 0)
+				ans.push_back(i + 1);
+		return ans;
 	}
 };
