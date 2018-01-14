@@ -7,6 +7,7 @@
  *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
  * };
  */
+//递归
 class Solution {
 public:
 	vector<int> preorderTraversal(TreeNode* root) {
@@ -24,4 +25,30 @@ public:
 		if (root->right != NULL)
 			preorder(result, root->right);
 	}
+};
+
+//循环
+class Solution {
+public:
+	vector<int> preorderTraversal(TreeNode* root) {
+		vector<int> result;
+		if (root == NULL)
+			return result;
+
+		stack<TreeNode*> s;
+		s.push(root);
+
+		while (!s.empty()) {
+			TreeNode *temp = s.top();
+			s.pop();
+			result.push_back(temp->val);
+			if (temp->right != NULL)
+				s.push(temp->right);
+			if (temp->left != NULL)
+				s.push(temp->left);
+
+		}
+		return result;
+	}
+
 };
