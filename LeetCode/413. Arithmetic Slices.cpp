@@ -1,3 +1,4 @@
+//solution 1
 class Solution {
 public:
 	int numberOfArithmeticSlices(vector<int>& A) {
@@ -23,6 +24,41 @@ public:
 				len_ari = 0;
 			}
 		}
+		return sum;
+	}
+};
+
+//solution 2
+class Solution {
+public:
+	int numberOfArithmeticSlices(vector<int>& A) {
+		int len = A.size();
+        if(len < 3)
+            return 0;
+		//dp[i][j]代表下标为i的元素与下标为j的元素是否构成等差数列
+		int dp[len] = { 0 };
+		for (int i = 2; i < len; i++) {
+			int index1 = i - 1;
+			int index2 = i - 2;
+			if (A[i] - A[index1] == A[index1] - A[index2]) {
+				dp[i] = dp[i - 1] + 1;
+			}
+		}
+
+		int count = 0;
+		int sum = 0;
+		for (int i = 2; i < len; i++) {
+			if (dp[i] > 0) {
+				count++;
+			} else {
+				sum += count * (count + 1) / 2;
+				count = 0;
+			}
+			if (i + 1 == len) {
+				sum += count * (count + 1) / 2;
+			}
+		}
+
 		return sum;
 	}
 };
