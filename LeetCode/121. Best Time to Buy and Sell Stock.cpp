@@ -1,3 +1,4 @@
+//solution 1
 class Solution {
 public:
 	int maxProfit(vector<int>& prices) {
@@ -18,3 +19,26 @@ public:
 		return maxprofit;
 	}
 };
+
+//solution 2
+class Solution {
+public:
+	int maxProfit(vector<int>& prices) {
+        if(prices.empty())
+            return 0;
+        
+        int dp[prices.size()];
+		dp[0] = 0;
+		int maxnum = 0;
+		for (int i = 1; i < (signed) prices.size(); i++) {
+			int temp = prices[i] - prices[i - 1];
+			dp[i] = dp[i - 1] + temp;
+			if(dp[i] < 0)
+				dp[i] = 0;
+			if (maxnum < dp[i])
+				maxnum = dp[i];
+		}
+		return maxnum;
+	}
+};
+
